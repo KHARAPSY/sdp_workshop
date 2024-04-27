@@ -46,6 +46,16 @@ app.get('/', (req, res) => {
     res.send(response);
 });
 
+/**
+ * @swagger
+ * /upload:
+ *   post:
+ *     summary: Upload csv
+ *     description: Upload data.csv file to MongoDB
+ *     responses:
+ *       '200':
+ *         description: Upload csv successfully
+ */
 app.post('/upload', async (req, res) => {
     try {
         const data = [];
@@ -96,7 +106,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:' + environments.port,
+                url: 'http://' + environments.host + ':' + environments.port,
             },
         ],
     },
@@ -104,6 +114,6 @@ const swaggerOptions = {
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { swaggerOptions: { url: '/api-docs/swagger.json' } }));
 
-app.listen(environments.port, () => winston.info('App listening on url: http://localhost:' + environments.port));
+app.listen(environments.port, () => winston.info('App listening on url: ' + environments.host + ':' + environments.port));
