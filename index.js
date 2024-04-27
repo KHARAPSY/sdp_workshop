@@ -32,6 +32,20 @@ app.use(error);
 
 const uri = process.env.MONGODB_URI;
 
+app.get('/', (req, res) => {
+    const htmlSnippet = `
+        <div class="mb-3">
+            <a href="/api-docs"><label>API Document</label></a>
+        </div>
+    `;
+    const response = `
+        <h1>Hello There!</h1>
+        <h4>If you looking to test API click below :)</h4>
+        ${htmlSnippet}
+    `;
+    res.send(response);
+});
+
 app.post('/upload', async (req, res) => {
     try {
         const data = [];

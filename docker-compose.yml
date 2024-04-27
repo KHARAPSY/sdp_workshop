@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    image: sdp_workshop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6969:6969"
+    volumes:
+      - ./config:/app/config
+      - ./controllers:/app/controllers
+      - ./csv:/app/csv
+      - ./environments.js:/app/environments.js
+      - ./index.js:/app/index.js
+      - ./logfile.log:/app/logfile.log
+      - ./middleware:/app/middleware
+      - ./models:/app/models
+      - ./routes:/app/routes
+      - ./startup:/app/startup
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
